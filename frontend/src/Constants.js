@@ -10,11 +10,11 @@ export const jumboStyle = {
 export const swipeStyle = {
   color: "white",
   position: "absolute",
-  width: 100,
-  height: 100,
-  top: "50%",
+  width: 150,
+  height: 75,
+  bottom: 80,
   border: "1px solid white",
-  borderRadius: 100,
+  borderRadius: 20,
   zIndex: 10,
 };
 

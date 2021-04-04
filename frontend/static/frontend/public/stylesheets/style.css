@@ -16,6 +16,7 @@ body {
   background-color: #191414;
 }
 
-b {
+b,
+.bold {
   font-family: Montserrat-Bold;
 }

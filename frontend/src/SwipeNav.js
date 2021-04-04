@@ -18,7 +18,7 @@ export default class SwipeNav extends Component {
         }}
         onClick={this.props.swipeLeft}
       >
-        <i style={{ fontSize: 50 }} className="fa fa-minus"></i>
+        <h3>Pass</h3>
       </Button>
     );
   }
@@ -34,7 +34,7 @@ export default class SwipeNav extends Component {
         }}
         onClick={this.props.swipeRight}
       >
-        <i style={{ fontSize: 50 }} className="fa fa-plus"></i>
+        <h3>Follow</h3>
       </Button>
     );
   }

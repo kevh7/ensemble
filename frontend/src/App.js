@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Container, Carousel, CarouselItem } from "react-bootstrap";
-import { jumboStyle, getUser, GREEN } from "./Constants";
+import { Container, Carousel, CarouselItem, Button } from "react-bootstrap";
+import { jumboStyle, getUser, GREEN, BLACK } from "./Constants";
 import Header from "./Header";
 import Profile from "./Profile";
 import SwipeNav from "./SwipeNav";
@@ -16,6 +16,7 @@ export default class App extends Component {
       authUser: "",
       potentialMatches: [],
       swipeIndex: 0,
+      viewingMatches: true,
     };
     this.swipeLeft = this.swipeLeft.bind(this);
     this.swipeRight = this.swipeRight.bind(this);
@@ -95,18 +96,60 @@ export default class App extends Component {
             position: "absolute",
             top: 0,
           }}
-        ></span>
+        >
+          <Button
+            variant="link"
+            style={{
+              float: "left",
+              marginLeft: 75,
+              marginTop: 20,
+              textDecoration: "none",
+              outline: "none",
+              boxShadow: "none",
+            }}
+            onClick={() => this.setState({ viewingMatches: true })}
+          >
+            <h1
+              style={{ color: BLACK }}
+              className={this.state.viewingMatches ? "bold" : ""}
+            >
+              Discover
+            </h1>
+          </Button>
+          <Button
+            variant="link"
+            style={{
+              float: "right",
+              marginRight: 75,
+              marginTop: 20,
+              textDecoration: "none",
+              outline: "none",
+              boxShadow: "none",
+            }}
+            onClick={() => this.setState({ viewingMatches: false })}
+          >
+            <h1
+              style={{ color: BLACK }}
+              className={!this.state.viewingMatches ? "bold" : ""}
+            >
+              Matches
+            </h1>
+          </Button>
+        </span>
         <Header />
         <br />
-        <div className="jumbotron" style={jumboStyle}>
-          <SwipeNav swipeLeft={this.swipeLeft} swipeRight={this.swipeRight} />
-          {this.state.loaded && (
-            <SwipeCarousel
-              profiles={this.state.swipes}
-              swipeIndex={this.state.swipeIndex}
-            />
-          )}
-        </div>
+        {this.state.viewingMatches && (
+          <div className="jumbotron" style={jumboStyle}>
+            <SwipeNav swipeLeft={this.swipeLeft} swipeRight={this.swipeRight} />
+            {this.state.loaded && (
+              <SwipeCarousel
+                profiles={this.state.swipes}
+                swipeIndex={this.state.swipeIndex}
+              />
+            )}
+          </div>
+        )}
+        {!this.state.viewingMatches && <div>"yo"</div>}
       </Container>
     );
   }
