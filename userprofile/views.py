@@ -15,6 +15,21 @@ def get_username(request):
 
 @login_required
 @api_view(["GET"])
+def get_full_name(request, username=None):
+    if username:
+        user = User.objects.get(username=username)
+    else:
+        user = User.objects.get(username=request.user.username)
+
+    if user.last_name:
+        full_name = user.first_name + " " + user.last_name
+    else:
+        full_name = user.first_name
+    return Response({"full_name": full_name})
+
+
+@login_required
+@api_view(["GET"])
 def get_tracks(request, username=None):
     if username:
         user = User.objects.get(username=username)

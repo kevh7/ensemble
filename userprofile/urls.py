@@ -5,6 +5,8 @@ from userprofile import views
 
 urlpatterns = [
     path("username", views.get_username),
+    path("full-name", views.get_full_name),
+    path("full-name/<username>", views.get_full_name),
     path("tracks", views.get_tracks),
     path("tracks/<username>", views.get_tracks),
     path("track-ids", views.get_tracks_ids),
