@@ -11,8 +11,7 @@ from api import spotify_util
 @api_view(["GET"])
 def get_details(request, username=None):
     return Response(
-        get_username_helper(request)
-        | get_full_name_helper(request, username)
+        get_full_name_helper(request, username)
         | get_track_ids_helper(request, username)
         | get_track_features_helper(request, username)
     )
