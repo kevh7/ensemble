@@ -1,12 +1,19 @@
 import React, { Component } from "react";
-import { Container, Carousel, CarouselItem, Button } from "react-bootstrap";
+import {
+  Container,
+  Carousel,
+  CarouselItem,
+  Button,
+  Row,
+  Col,
+} from "react-bootstrap";
 import { jumboStyle, getUser, GREEN, BLACK } from "./Constants";
 import Header from "./Header";
-import Profile from "./Profile";
 import SwipeNav from "./SwipeNav";
 import User from "./User";
 import Singles from "./Singles";
 import SwipeCarousel from "./SwipeCarousel";
+import Post from "./Post";
 
 export default class App extends Component {
   constructor(props) {
@@ -16,7 +23,8 @@ export default class App extends Component {
       authUser: "",
       potentialMatches: [],
       swipeIndex: 0,
-      viewingMatches: true,
+      discoverMode: true,
+      follows: [],
     };
     this.swipeLeft = this.swipeLeft.bind(this);
     this.swipeRight = this.swipeRight.bind(this);
@@ -31,6 +39,12 @@ export default class App extends Component {
       `./api/user/details/${this.state.authID}`
     ).then((res) => res.json());
     this.setState({ authUser: new User(details) });
+    // Get follows
+    const follows = await fetch("./api/user/follows").then((res) => res.json());
+    this.setState({ follows: new Singles(follows) });
+    let followIDs = this.state.follows.ids;
+    let users = await Promise.all(followIDs.map((id) => getUser(id)));
+    this.setState({ users: users });
     // Get potential matches for auth user
     const potential_matches = await fetch(
       "./api/user/potential-matches"
@@ -74,6 +88,22 @@ export default class App extends Component {
     await this.swipe();
   }
 
+  posts() {
+    const captions = [
+      "Just got off work! Heading to the cottage this weekend. #TGIF",
+      "Listening to my favorite song during #HackPrinceton!...",
+      "Love this song but need something new. Any recs?",
+      "I swear I just had this song on repeat for 3 hours. OMG!",
+    ];
+    return (
+      <Container fluid style={{ paddingTop: 400 }}>
+        {this.state.users.map((user, i) => (
+            <Post name={user.name} id={user.topTrack} caption={captions[i]} />
+        ))}
+      </Container>
+    );
+  }
+
   render() {
     return (
       <Container
@@ -107,11 +137,11 @@ export default class App extends Component {
               outline: "none",
               boxShadow: "none",
             }}
-            onClick={() => this.setState({ viewingMatches: true })}
+            onClick={() => this.setState({ discoverMode: true })}
           >
             <h1
               style={{ color: BLACK }}
-              className={this.state.viewingMatches ? "bold" : ""}
+              className={this.state.discoverMode ? "bold" : ""}
             >
               Discover
             </h1>
@@ -126,19 +156,24 @@ export default class App extends Component {
               outline: "none",
               boxShadow: "none",
             }}
-            onClick={() => this.setState({ viewingMatches: false })}
+            onClick={() => this.setState({ discoverMode: false })}
           >
             <h1
               style={{ color: BLACK }}
-              className={!this.state.viewingMatches ? "bold" : ""}
+              className={!this.state.discoverMode ? "bold" : ""}
             >
-              Matches
+              Feed
             </h1>
           </Button>
         </span>
         <Header />
+        {!this.state.discoverMode && (
+          <div className="jumbotron" style={jumboStyle}>
+            {this.posts()}
+          </div>
+        )}
         <br />
-        {this.state.viewingMatches && (
+        {this.state.discoverMode && (
           <div className="jumbotron" style={jumboStyle}>
             <SwipeNav swipeLeft={this.swipeLeft} swipeRight={this.swipeRight} />
             {this.state.loaded && (
@@ -149,7 +184,6 @@ export default class App extends Component {
             )}
           </div>
         )}
-        {!this.state.viewingMatches && <div>"yo"</div>}
       </Container>
     );
   }

@@ -19,7 +19,7 @@ export default function Header() {
           zIndex: 5,
         }}
       >
-        <b>ensemble</b>
+        ensemble
       </h1>
     </div>
   );
