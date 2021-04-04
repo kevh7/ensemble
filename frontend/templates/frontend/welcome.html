@@ -1,4 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <a href="{% url "social:begin" "spotify" %}">Click here to login</a>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <link
+    rel="stylesheet"
+    href="/static/frontend/public/stylesheets/style.css"/>
+  </head>
+  <div
+    id="container-fluid"
+    style="display: flex; align-items: center; justify-content: center; height: 100vh"
+  >
+    <div
+      class="jumbotron"
+      style="background-color: #191414; text-align: center"
+    >
+      <h1 style="font-size: 10em; color: #1DB954;"><b>Ensemble</b></h1>
+      <br />
+      <br />
+      <a href="{% url "social:begin" "spotify" %}" 
+      role="button" class="btn btn-lg btn-outline-dark"
+      style="width: 25%; height: 20%; font-size: 2.5vw; 
+      color: white; border: 2px solid white; border-radius: 5px">Log In</a>
+    </div>
+  </div>
 </html>

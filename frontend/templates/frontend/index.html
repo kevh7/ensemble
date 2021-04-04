@@ -4,11 +4,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ensemble</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <link
+    rel="stylesheet"
+    href="/static/frontend/public/stylesheets/style.css"/>
+    <!-- FontAwesome-->
+    <script src="https://use.fontawesome.com/1c70ee5599.js"></script>
   </head>
   <body>
-    <div id="app">
+    <div id="container" style="min-height: 100vh; display: flex; flex-direction: column; flex-grow: 1">
+    <div id="app" style="flex-grow: 1">
       <!-- React will load here -->
     </div>
+  </div>
   </body>
   {% load static %}
   <script src="{% static "frontend/public/main.js" %}"></script>
