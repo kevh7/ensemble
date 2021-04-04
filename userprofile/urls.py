@@ -18,4 +18,5 @@ urlpatterns = [
     path("track-features/<username>", views.get_track_features),
     path("swipe-left/<username>", views.swipe_left),
     path("swipe-right/<username>", views.swipe_right),
+    path("follows", views.get_follows),
 ]

@@ -151,3 +151,10 @@ def swipe_right(request, username):
         user.userprofile.save()
 
     return Response({"ok": True})
+
+
+@login_required
+@api_view(["GET"])
+def follows(request):
+    user = User.objects.get(username=request.user.username)
+    return Response({"ids": user.userprofile.liked_profiles})
