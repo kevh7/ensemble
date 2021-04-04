@@ -4,8 +4,8 @@
 }
 
 @font-face {
-  font-family: "Montserrat-Bold";
-  src: url("../fonts/WorkSans-Regular.ttf");
+  font-family: "WorkSans-SemiBold";
+  src: url("../fonts/WorkSans-SemiBold.ttf");
 }
 
 * {
@@ -18,5 +18,5 @@ body {
 
 b,
 .bold {
-  font-family: WorkSans-Regular;
+  font-family: WorkSans-SemiBold;
 }
