@@ -27,11 +27,6 @@ class UserProfile(models.Model):
         models.CharField(max_length=50), default=get_empty_array, blank=True
     )
 
-    # list of usernames of the profiles that have liked this user
-    liked_by_profile = ArrayField(
-        models.CharField(max_length=50), default=get_empty_array, blank=True
-    )
-
     # list of top tracks
     tracks = ArrayField(
         models.CharField(max_length=50), default=get_empty_array, blank=True

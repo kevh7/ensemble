@@ -96,3 +96,27 @@ def get_potential_matches(request):
             pm_names.append(pm.user.username)
 
     return Response({"potential_matches": pm_names})
+
+
+@login_required
+@api_view(["GET"])
+def swipe_left(request, username):
+    user = User.objects.get(username=request.user.username)
+
+    if username not in user.userprofile.passed_profiles:
+        user.userprofile.passed_profiles.append(username)
+        user.userprofile.save()
+
+    return Response({"ok": True})
+
+
+@login_required
+@api_view(["GET"])
+def swipe_right(request, username):
+    user = User.objects.get(username=request.user.username)
+
+    if username not in user.userprofile.liked_profiles:
+        user.userprofile.liked_profiles.append(username)
+        user.userprofile.save()
+
+    return Response({"ok": True})
