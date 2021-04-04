@@ -9,13 +9,26 @@ from api import spotify_util
 
 @login_required
 @api_view(["GET"])
-def get_username(request):
-    return Response({"username": request.user.username})
+def get_details(request, username=None):
+    return Response(
+        get_username_helper(request)
+        | get_full_name_helper(request, username)
+        | get_track_ids_helper(request, username)
+        | get_track_features_helper(request, username)
+    )
+
+
+def get_username_helper(request):
+    return {"username": request.user.username}
 
 
 @login_required
 @api_view(["GET"])
-def get_full_name(request, username=None):
+def get_username(request):
+    return Response(get_username_helper(request))
+
+
+def get_full_name_helper(request, username=None):
     if username:
         user = User.objects.get(username=username)
     else:
@@ -25,12 +38,16 @@ def get_full_name(request, username=None):
         full_name = user.first_name + " " + user.last_name
     else:
         full_name = user.first_name
-    return Response({"full_name": full_name})
+    return {"full_name": full_name}
 
 
 @login_required
 @api_view(["GET"])
-def get_tracks(request, username=None):
+def get_full_name(request, username=None):
+    return Response(get_full_name_helper(request, username))
+
+
+def get_tracks_helper(request, username=None):
     if username:
         user = User.objects.get(username=username)
     else:
@@ -40,12 +57,16 @@ def get_tracks(request, username=None):
     track_ids = profile.tracks
     track_names = spotify_util.get_track_names(request.user.username, track_ids)
 
-    return Response({"track_names": track_names})
+    return {"track_names": track_names}
 
 
 @login_required
 @api_view(["GET"])
-def get_tracks_ids(request, username=None):
+def get_tracks(request, username=None):
+    return Response(get_tracks_helper(request, username))
+
+
+def get_track_ids_helper(request, username=None):
     if username:
         user = User.objects.get(username=username)
     else:
@@ -54,12 +75,16 @@ def get_tracks_ids(request, username=None):
     profile = user.userprofile
     track_ids = profile.tracks
 
-    return Response({"track_ids": track_ids})
+    return {"track_ids": track_ids}
 
 
 @login_required
 @api_view(["GET"])
-def get_track_features(request, username=None):
+def get_track_ids(request, username=None):
+    return Response(get_track_ids_helper(request, username))
+
+
+def get_track_features_helper(request, username=None):
     if username:
         user = User.objects.get(username=username)
     else:
@@ -75,7 +100,13 @@ def get_track_features(request, username=None):
         "tempo": features[10],
     }
 
-    return Response({"track_features": response})
+    return {"track_features": response}
+
+
+@login_required
+@api_view(["GET"])
+def get_track_features(request, username=None):
+    return Response(get_track_features_helper(request, username))
 
 
 @login_required
