@@ -1,5 +1,7 @@
 # ensemble
 
+[**Winner - Best Social Media Hack - $10,000 prize (largest cash prize)**](https://devpost.com/software/ensemble-iao9vj)
+
 Created by Kevin Huang and Brendan Zelikman in 1 day during HackPrinceton Spring 2021.
 
 ## Development Setup (macOS)
