@@ -41,10 +41,9 @@ export default class App extends Component {
     this.setState({ authUser: new User(details) });
     // Get follows
     const follows = await fetch("./api/user/follows").then((res) => res.json());
-    this.setState({ follows: new Singles(follows) });
-    let followIDs = this.state.follows.ids;
+    const followIDs = new Singles(follows).ids;
     let users = await Promise.all(followIDs.map((id) => getUser(id)));
-    this.setState({ users: users });
+    this.setState({ follows: users });
     // Get potential matches for auth user
     const potential_matches = await fetch(
       "./api/user/potential-matches"
@@ -85,11 +84,14 @@ export default class App extends Component {
   async swipeRight() {
     await fetch(`./api/user/swipe-right/${this.state.currentSwipe.id}`);
     console.log("Swiped right on " + this.state.currentSwipe);
+    this.setState({
+      follows: this.state.follows.concat([this.state.currentSwipe]),
+    });
     await this.swipe();
   }
 
   posts() {
-    const captions = [
+    let captions = [
       "Just got off work! Heading to the cottage this weekend. #TGIF",
       "Listening to my favorite song during #HackPrinceton!...",
       "Love this song but need something new. Any recs?",
@@ -97,9 +99,20 @@ export default class App extends Component {
       "Just had an awesome workout! #FeelTheBurn",
       "I'm loving this new social media app, ensemble!",
     ];
+    while (captions.length < this.state.follows.length) {
+      captions = captions.concat(captions);
+    }
     return (
-      <Container fluid style={{ paddingTop: 400 }}>
-        {this.state.users.map((user, i) => (
+      <Container
+        fluid
+        style={{ position: "absolute", top: 0, paddingTop: 300 }}
+      >
+        {this.state.follows.length == 0 ? (
+          <h1 style={{ color: "white" }}>Not currently following anyone!</h1>
+        ) : (
+          ""
+        )}
+        {this.state.follows.map((user, i) => (
           <Post name={user.name} id={user.topTrack} caption={captions[i]} />
         ))}
       </Container>
