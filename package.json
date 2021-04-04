@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "server": "cd frontend && npm run server",
+    "heroku-prebuild": "cd frontend && npm install && npm run build"
+  },
+  "engines": {
+    "node": "15.x"
+  }
+}
