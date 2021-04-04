@@ -94,11 +94,13 @@ export default class App extends Component {
       "Listening to my favorite song during #HackPrinceton!...",
       "Love this song but need something new. Any recs?",
       "I swear I just had this song on repeat for 3 hours. OMG!",
+      "Just had an awesome workout! #FeelTheBurn",
+      "I'm loving this new social media app, ensemble!",
     ];
     return (
       <Container fluid style={{ paddingTop: 400 }}>
         {this.state.users.map((user, i) => (
-            <Post name={user.name} id={user.topTrack} caption={captions[i]} />
+          <Post name={user.name} id={user.topTrack} caption={captions[i]} />
         ))}
       </Container>
     );
