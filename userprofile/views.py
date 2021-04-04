@@ -30,7 +30,7 @@ def get_tracks(request, username=None):
 
 @login_required
 @api_view(["GET"])
-def get_tracks_links(request, username=None):
+def get_tracks_ids(request, username=None):
     if username:
         user = User.objects.get(username=username)
     else:
@@ -38,9 +38,8 @@ def get_tracks_links(request, username=None):
 
     profile = user.userprofile
     track_ids = profile.tracks
-    track_links = spotify_util.get_track_links(request.user.username, track_ids)
 
-    return Response({"track_links": track_links})
+    return Response({"track_ids": track_ids})
 
 
 @login_required
