@@ -42,7 +42,7 @@ def get_track_ids(username):
     endpoint = "me/top/tracks"
 
     tracks = execute_spotify_api_request(
-        endpoint, username, {"time_range": "short_term", "limit": 20}
+        endpoint, username, {"time_range": "short_term", "limit": 5}
     )
     track_ids = []
 
