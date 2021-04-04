@@ -126,7 +126,7 @@ def get_potential_matches(request):
         ):
             pm_names.append(pm.user.username)
 
-    return Response({"potential_matches": pm_names})
+    return Response({"ids": pm_names})
 
 
 @login_required
