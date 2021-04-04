@@ -30,6 +30,21 @@ def get_tracks(request, username=None):
 
 @login_required
 @api_view(["GET"])
+def get_tracks_links(request, username=None):
+    if username:
+        user = User.objects.get(username=username)
+    else:
+        user = User.objects.get(username=request.user.username)
+
+    profile = user.userprofile
+    track_ids = profile.tracks
+    track_links = spotify_util.get_track_links(request.user.username, track_ids)
+
+    return Response({"track_links": track_links})
+
+
+@login_required
+@api_view(["GET"])
 def get_potential_matches(request):
     user = User.objects.get(username=request.user.username)
     cluster = user.userprofile.cluster

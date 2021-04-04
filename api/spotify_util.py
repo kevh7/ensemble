@@ -41,7 +41,9 @@ def execute_spotify_api_request(endpoint, username, params=None):
 def get_track_ids(username):
     endpoint = "me/top/tracks"
 
-    tracks = execute_spotify_api_request(endpoint, username)
+    tracks = execute_spotify_api_request(
+        endpoint, username, {"time_range": "short_term", "limit": 20}
+    )
     track_ids = []
 
     for track in tracks["items"]:
@@ -54,9 +56,7 @@ def get_track_names(username, track_ids):
     endpoint = "tracks"
 
     tracks = execute_spotify_api_request(
-        endpoint,
-        username,
-        {"ids": ",".join(track_ids), "time_range": "short_term", "limit": 20},
+        endpoint, username, {"ids": ",".join(track_ids)}
     )["tracks"]
 
     track_names = []
@@ -64,6 +64,20 @@ def get_track_names(username, track_ids):
         track_names.append(track["name"])
 
     return track_names
+
+
+def get_track_links(username, track_ids):
+    endpoint = "tracks"
+
+    tracks = execute_spotify_api_request(
+        endpoint, username, {"ids": ",".join(track_ids)}
+    )["tracks"]
+
+    track_links = []
+    for track in tracks:
+        track_links.append(track["external_urls"]["spotify"])
+
+    return track_links
 
 
 def save_tracks(username):
