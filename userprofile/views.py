@@ -44,6 +44,27 @@ def get_tracks_ids(request, username=None):
 
 @login_required
 @api_view(["GET"])
+def get_track_features(request, username=None):
+    if username:
+        user = User.objects.get(username=username)
+    else:
+        user = User.objects.get(username=request.user.username)
+
+    profile = user.userprofile
+    features = profile.features
+
+    response = {
+        "danceability": features[0],
+        "energy": features[1],
+        "acousticness": features[6],
+        "tempo": features[10],
+    }
+
+    return Response({"track_features": response})
+
+
+@login_required
+@api_view(["GET"])
 def get_potential_matches(request):
     user = User.objects.get(username=request.user.username)
     cluster = user.userprofile.cluster

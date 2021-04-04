@@ -10,4 +10,6 @@ urlpatterns = [
     path("track-ids", views.get_tracks_ids),
     path("track-ids/<username>", views.get_tracks_ids),
     path("potential-matches", views.get_potential_matches),
+    path("track-features", views.get_track_features),
+    path("track-features/<username>", views.get_track_features),
 ]

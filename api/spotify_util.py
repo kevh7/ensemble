@@ -137,7 +137,7 @@ def get_artist_id(username, track_id):
 def get_similar_songs(username, genre):
     endpoint = "recommendations/"
 
-    params = {"seed_genres": genre}
+    params = {"seed_genres": genre, "limit": 5}
 
     tracks = execute_spotify_api_request(endpoint, username, params)["tracks"]
     track_ids = []

@@ -10,7 +10,7 @@ def cluster():
 
     X = list(features)
 
-    km = KMeans(n_clusters=max(1, len(X) // 10))
+    km = KMeans(n_clusters=max(1, len(X) // 23))
     preds = km.fit_predict(X)
 
     for i in range(len(preds)):
