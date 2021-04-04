@@ -10,8 +10,12 @@ from api import spotify_util
 @login_required
 @api_view(["GET"])
 def get_details(request, username=None):
+    if not username:
+        username = request.user.username
+
     return Response(
-        get_full_name_helper(request, username)
+        {"username": username}
+        | get_full_name_helper(request, username)
         | get_track_ids_helper(request, username)
         | get_track_features_helper(request, username)
     )
